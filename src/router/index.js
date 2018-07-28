@@ -5,10 +5,11 @@ Vue.use(VueRouter)
 
 export default function () {
     const router = new VueRouter({
-        history: true,
+        mode:'history',
         routes: [
             {path: '/index', component: () => import('../components/index.vue')},
             {path: '/about', component: () => import('../components/about.vue')},
+            {path: '/top', component: () => import('../components/top.vue')},
             {path: '*', redirect: '/index'}
         ]
     })

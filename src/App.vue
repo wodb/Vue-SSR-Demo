@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <!--我是app.vue-->
+    <router-link to="/index">index</router-link>
+    <router-link to="/about">about</router-link>
+    <router-link to="/top">top</router-link>
     <router-view></router-view>
   </div>
 </template>
@@ -10,8 +12,7 @@
   }
 </script>
 <style lang="stylus">
-  .App
-    background-color: red;
-    width:100px;
-    height:100px;
+  #app
+    a
+      margin:0 10px;
 </style>
