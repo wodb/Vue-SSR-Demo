@@ -80,8 +80,9 @@ app.use(microcache.cacheSeconds(1, req => useMicroCache && req.originalUrl))
 
 function render (req, res) {
   const s = Date.now()
+    console.log(req.url);
 
-  res.setHeader("Content-Type", "text/html")
+    res.setHeader("Content-Type", "text/html")
   res.setHeader("Server", serverInfo)
 
   const handleError = err => {
