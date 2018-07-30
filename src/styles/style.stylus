@@ -42,6 +42,10 @@ q:before, q:after
 table
     border-collapse: collapse;
     border-spacing: 0;
+a
+    text-decoration: none;
+    cursor: pointer;
+    color: #909090;
 
 .bg-white
     background-color:#fff;

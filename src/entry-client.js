@@ -22,14 +22,12 @@ router.onReady(() => {
         // ?????????????????
         let diffed = false
         const activated = matched.filter((c, i) => {
-            console.log(diffed || (diffed = (prevMatched[i] !== c)));
             return diffed || (diffed = (prevMatched[i] !== c))
         })
 
         if (!activated.length) {
             return next()
         }
-        console.log(activated);
         // 这里如果有加载指示器(loading indicator)，就触发
 
         Promise.all(activated.map(c => {
