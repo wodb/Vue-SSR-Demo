@@ -12,14 +12,13 @@ if (window.__INITIAL_STATE__) {
 
 router.onReady(() => {
     router.beforeResolve((to, from, next) => {
-        console.log(`entry-client`,to,from)
 
         const matched = router.getMatchedComponents(to)
         const prevMatched = router.getMatchedComponents(from)
 
         // 我们只关心非预渲染的组件
         // 所以我们对比它们，找出两个匹配列表的差异组件
-        // ?????????????????
+        // ????????????????? 共用父级自己不同
         let diffed = false
         const activated = matched.filter((c, i) => {
             return diffed || (diffed = (prevMatched[i] !== c))

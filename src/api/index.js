@@ -16,10 +16,50 @@ const delay = (resfun,timer) => setTimeout(() => resfun(),timer)
 export const fetchIndexTags = () => new Promise((resolve,reject) => delay(() => resolve(data),200))
 
 // 首页list
-export const fetchIndexListByType = (type) => request.get('/v1/get_recommended_entry',{
-    params:{
-        suid:'nvfBZaZ2jjZyffaZqJAN',
-        ab:'welcome_3',
-        src:'web'
+export const fetchEntriesByType = (type) => {
+    let category = ''
+    switch (type) {
+        case 'frontend':
+            category = '5562b415e4b00c57d9b94ac8'
+            break
+        case 'Andriod':
+            category = '5562b410e4b00c57d9b94a92'
+            break
+        case 'backend':
+            category = '5562b419e4b00c57d9b94ae2'
+            break
+        case 'ai':
+            category = '57be7c18128fe1005fa902de'
+            break
+        case 'IOS':
+            category = '5562b405e4b00c57d9b94a41'
+            break
+        case 'freebie':
+            category = '5562b422e4b00c57d9b94b53'
+            break
+        case 'article':
+            category = '5562b428e4b00c57d9b94b9d'
+            break
+        case 'devops':
+            category = '5b34a478e1382338991dd3c1'
     }
-})
+    let params = {
+        category: category,
+        ab: 'welcome_3',
+        src: 'web'
+    }
+    return request.get('/timeline/get_entry_by_rank', {
+        params
+    }).then(res => res.d.entrylist)
+}
+
+export const fetchRecommendByType = (type) => {
+    let params = {
+        suid: 'nvfBZaZ2jjZyffaZqJAN',
+        ab: 'welcome_3',
+        src: 'web'
+    }
+    return request.get('/recommender/get_recommended_entry', {
+        params
+    }).then(res => res.d)
+}

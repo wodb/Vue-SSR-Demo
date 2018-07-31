@@ -1,4 +1,4 @@
-import {fetchIndexTags,fetchIndexListByType} from '@/api/index'
+import { fetchIndexTags, fetchEntriesByType, fetchRecommendByType} from '@/api/index'
 
 const app = {
     state: {
@@ -40,10 +40,16 @@ const app = {
                     return res
                 })
         },
-        FETCH_INDEX__LIST_BY_TYPE({commit},{type}) {
-            return fetchIndexListByType(type)
+        FETCH_INDEX_LIST_BY_TYPE({commit},{type}) {
+            let p = null
+            if (type == 'top') {
+                p = fetchRecommendByType(type)
+            }else {
+                p = fetchEntriesByType(type)
+            }
+            return p
                 .then(res => {
-                    commit('SET_INDEX_LIST', { type, data: res.d})
+                    commit('SET_INDEX_LIST', { type, data: res})
                 })
         }
     }

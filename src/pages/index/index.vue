@@ -16,7 +16,7 @@
     		<router-view></router-view>
     	</div>
         <div class="welcome__side bg-white">
-            {{rightText}}
+            {{$route.path}}
         </div>
     </div>
 </template>
@@ -35,15 +35,14 @@
 		},
         data() {
             return {
-                rightText:'右侧文字',
             }
         },
         mounted() {
-            console.log(this.$route)
         }
     }
 </script>
 <style lang="stylus">
+
 .container 
     position relative;
     margin 0 auto;
@@ -51,8 +50,10 @@
     max-width 1200px;
     margin-top 15px;
     display flex;
+
 .welcome__feed 
     flex 1
+
 .welcome__side 
     width 240px;
     min-width 240px;
@@ -60,6 +61,7 @@
     display flex;
     justify-content center;
     align-items center;
+
 .category-nav 
     display flex;
     justify-content space-between;
@@ -75,7 +77,7 @@
         color #90979c;
 	&.hover,&.router-link-active
 		color #007fff;
-    
+
 .entry-list
     .item 
         border-bottom 1px solid rgba(178,186,194,.15);
@@ -87,6 +89,7 @@
         flex 1
     .thumb
         width 106px;
+        height 62px
     .title-row
         margin 6px 0 10px;
         white-space nowrap;
@@ -96,36 +99,4 @@
             color #333;
     .info-row
         color #8f969c;
-    .meta-list
-        display flex;
-        align-items baseline;
-        white-space nowrap;
-        .item:not(:last-child):not(.category)::after
-            content "·";
-            margin 4.8px;
-            color #8f969c;
-        .user-popover-box
-            display inline;
-    .category-title
-        display inline-block;
-        margin-right 14px;
-        padding 4.5px 0;
-        min-width 60px;
-        text-align center;
-        line-height 1;
-        color #fff;
-        background-color #c69f42;
-        border-radius 2px;
-        font-size 12px
-        &.frontend
-            background-color #56c4e1;
-        &.android
-            background-color #42c67d;
-        &.ai
-            background-color #e8596b;
-        &.backend
-            background-color #857dea;
-        &.ios
-            background-color #ff955b;
-
 </style>
