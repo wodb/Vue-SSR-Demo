@@ -7,7 +7,7 @@
                     <nav class="main-nav">
                         <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
                             <el-menu-item index="/index">首页</el-menu-item>
-                            <el-menu-item index="/books/">小册</el-menu-item>
+                            <el-menu-item index="/books">小册</el-menu-item>
                             <el-submenu index="2">
                                 <template slot="title">我的工作台</template>
                                 <el-menu-item index="2-1">选项1</el-menu-item>

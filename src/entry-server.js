@@ -12,6 +12,8 @@ export default (context) => {
 
             if (!matcheds.length) return reject({code:404})
 
+            console.log(`entry-server len`,matcheds.length)
+
             Promise.all(matcheds.map(Component => {
                 if (Component.asyncData) {
                     return Component.asyncData({

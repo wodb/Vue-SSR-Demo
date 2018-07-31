@@ -6,46 +6,14 @@
     			<h5>热门文章</h5>
     			<ul class="nav-list">
     				<li class="nav-item" v-for="tag in tags" :key="tag.id">
-    					<span class="title">{{tag.text}}</span>
+    					<span class="title">
+							<router-link exact :to="'/index' + (tag.attr)">{{tag.text}}</router-link>
+						</span>
     				</li>
     			</ul>
     		</nav>
     		<!-- 内容 -->
-    		<ul class="entry-list">
-    			<li class="item">
-    				<div class="entry">
-    					<div class="entry-link">
-    						<div class="content-box">
-    							<div class="info-box">
-    								<div class="info-row title-row">
-                                        <a href="javascript:void(0)" target="_blank" class="title">这样你都不懂Promise,算我输！</a>
-    								</div>
-    								<div class="info-row meta-row">
-    									<ul class="meta-list">
-    										<li class="item category">
-    											<span class="category-title frontend">前端</span>
-    										</li>
-    										<li class="item username clickable">
-    											<div class="user-popover-box">
-    												<a href="javascript:void(0)" target="_blank">
-    													viyoung
-    												</a>
-    											</div>
-    										</li>
-    										<li class="item">
-    											2天前
-    										</li>
-    										<li class="item">
-    											3864 次阅读
-    										</li>
-    									</ul>
-    								</div>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</li>
-    		</ul>
+    		<router-view></router-view>
     	</div>
         <div class="welcome__side bg-white">
             {{rightText}}
@@ -55,11 +23,14 @@
 <script>
     export default {
         asyncData({store,router}) {
-            return store.dispatch('getIndexTags')
+            return store.dispatch('FETCH_INDEX_TAGS')
 		},
 		computed: {
             tags() {
                 return this.$store.state.app.indexTags
+			},
+			currentTag() {
+                return this.$store.state.app.activeType
 			}
 		},
         data() {
@@ -74,74 +45,87 @@
 </script>
 <style lang="stylus">
 .container 
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 1200px;
-    margin-top: 15px;
-    display: flex;
+    position relative;
+    margin 0 auto;
+    width 100%;
+    max-width 1200px;
+    margin-top 15px;
+    display flex;
 .welcome__feed 
-    flex:1;
+    flex 1
 .welcome__side 
-    width: 240px;
-    min-width:240px;
-    margin-left: 20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    width 240px;
+    min-width 240px;
+    margin-left 20px;
+    display flex;
+    justify-content center;
+    align-items center;
 .category-nav 
-    display:flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #f6f6f6;
-    padding:18px 24px;
+    display flex;
+    justify-content space-between;
+    border-bottom 1px solid #f6f6f6;
+    padding 18px 24px;
     ul 
-        display:flex;
+        display flex;
     .nav-item 
-        margin-right:20px;
-        font-size:14px;
-        cursor:pointer;
+        margin-right 20px;
+        font-size 14px;
+        cursor pointer;
     .title
-        color: #90979c;
-        &.hover
-            color: #007fff;
+        color #90979c;
+	&.hover,&.router-link-active
+		color #007fff;
     
 .entry-list
     .item 
-        border-bottom: 1px solid rgba(178,186,194,.15);
-        color: #90979c;
+        border-bottom 1px solid rgba(178,186,194,.15);
+        color #90979c;
     .content-box
-        display:flex;
-        padding:18px 24px;
+        padding 18px 24px;
+        display flex
+    .info-box
+        flex 1
+    .thumb
+        width 106px;
     .title-row
-        margin: 6px 0 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        margin 6px 0 10px;
+        white-space nowrap;
+        overflow hidden;
+        text-overflow ellipsis;
         .title
-            color:#333;
+            color #333;
     .info-row
-        color: #8f969c;
+        color #8f969c;
     .meta-list
-        display: flex;
-        align-items: baseline;
-        white-space: nowrap;
+        display flex;
+        align-items baseline;
+        white-space nowrap;
         .item:not(:last-child):not(.category)::after
-            content: "·";
-            margin: 4.8px;
-            color: #8f969c;
+            content "·";
+            margin 4.8px;
+            color #8f969c;
         .user-popover-box
-            display:inline;
+            display inline;
     .category-title
-        display: inline-block;
-        margin-right: 14px;
-        padding: 4.5px 0;
-        min-width: 54px;
-        text-align: center;
-        line-height: 1;
-        color: #fff;
-        background-color: #c69f42;
-        border-radius: 2px;
+        display inline-block;
+        margin-right 14px;
+        padding 4.5px 0;
+        min-width 60px;
+        text-align center;
+        line-height 1;
+        color #fff;
+        background-color #c69f42;
+        border-radius 2px;
+        font-size 12px
         &.frontend
-            background-color: #56c4e1;
+            background-color #56c4e1;
+        &.android
+            background-color #42c67d;
+        &.ai
+            background-color #e8596b;
+        &.backend
+            background-color #857dea;
+        &.ios
+            background-color #ff955b;
 
 </style>

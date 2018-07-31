@@ -1,28 +1,50 @@
+import {fetchIndexTags,fetchIndexListByType} from '@/api/index'
+
 const app = {
-    state:{
-        indexTags:[],   // 当前页面的属性
-        indexList:[],   // 当前页面的列表
+    state: {
+        activeType:null, // 当前类型
+        indexTags: [],   // 当前页面的属性
+        indexList: {
+            top:[], // 推荐页面
+            frontend:[], // 前端页面
+            Andriod:[] // 安卓页面
+        },   // 当前页面的列表
     },
-    mutations:{
-        setIndexTags(state,payload) {
+    mutations: {
+        SET_ACTIVE_TYPE(state,{type}) {
+            state.activeType = type
+        },
+        SET_INDEX_TAGS(state, payload) {
             state.indexTags = payload
         },
-        setIndexList(state,payload) {
-            state.indexList = payload
+        SET_INDEX_LIST(state, {type,data}) {
+            state.indexList[type] = state.indexList[type].concat(data)
         }
     },
-    actions:{
-        getIndexTags(context,payload) {
-            return new Promise((resolve,reject) => {
-                setTimeout(function () {
-                    const data = [{id:0,text:'推荐'},{id:1,text:'前端'},{id:2,text:'Andriod'},{id:3,text:'后端'},{id:4,text:'人工智能'},{id:5,text:'IOS'},{id:6,text:'工具资源'},{id:7,text:'阅读'},{id:8,text:'运维'}]
-                    context.commit('setIndexTags',data)
-                    resolve(data)
-                },200)
+    actions: {
+        FETCH_ACTIVE_TYPE(context,{type}) {
+            context.commit('SET_ACTIVE_TYPE',{
+                type
             })
         },
-        getIndexList({commit},payload) {
-
+        ENSURE_ACTIVE_ITEMS({commit,dispatch,getters}) {
+            return dispatch('FETCH_INDEX_TAGS')
+                .then(res => {
+                    dispatch('FETCH_ACTIVE_TYPE',{type:res[0].attr})
+                })
+        },
+        FETCH_INDEX_TAGS(context) {
+            return fetchIndexTags()
+                .then(res => {
+                    context.commit('SET_INDEX_TAGS', res)
+                    return res
+                })
+        },
+        FETCH_INDEX__LIST_BY_TYPE({commit},{type}) {
+            return fetchIndexListByType(type)
+                .then(res => {
+                    commit('SET_INDEX_LIST', { type, data: res.d})
+                })
         }
     }
 }

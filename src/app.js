@@ -5,13 +5,18 @@ import createRouter from './router/index'
 import App from './App.vue'
 import createStore from './store/index'
 import { sync } from 'vuex-router-sync'
+import * as filters from "@/util/filters";
 
-Vue.use(ElementUI, { size: 'small'})
 
 export function createApp() {
 
     const router = createRouter()
     const store = createStore()
+    
+    Object.keys(filters).forEach((key) => {
+        Vue.filter(key,filters[key])
+    })
+    Vue.use(ElementUI, { size: 'small' })
 
     sync(store,router)
     const app = new Vue({

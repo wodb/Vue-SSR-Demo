@@ -1,8 +1,7 @@
 import axios from 'axios'
-import {Message} from 'element-ui'
 
 const service = axios.create({
-    baseURL:CONFIG.baseURL,
+    baseURL:'http://test.mac.com',
     timeout: 10000
 })
 
@@ -14,25 +13,8 @@ service.interceptors.request.use(config => {
 })
 
 service.interceptors.response.use(response => {
-
-    let {status,message} = response.data
-
-    if (status !== 'success') {
-        Message({
-            message: message,
-            type: 'error',
-            duration: 3 * 1000
-        })
-        return Promise.reject(response.data)
-    }
-
-    return response
+    return response.data
 }, error => {
-    Message({
-        message: error.message,
-        type: 'error',
-        duration: 3 * 1000
-    })
     return Promise.reject(error)
 })
 
