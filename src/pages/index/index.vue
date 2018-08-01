@@ -1,5 +1,5 @@
 <template>
-    <div class="container main-container">
+    <div class="container">
     	<div class="feed welcome__feed bg-white">
     		<!-- 文章标题 -->
     		<nav class="category-nav">
@@ -13,11 +13,10 @@
     			</ul>
     		</nav>
     		<!-- 内容 -->
-    		<router-view></router-view>
+            <transition name="el-fade-in-linear">
+    		    <router-view></router-view>
+            </transition>
     	</div>
-        <div class="welcome__side bg-white">
-            {{$route.path}}
-        </div>
     </div>
 </template>
 <script>
@@ -44,24 +43,14 @@
 <style lang="stylus">
 
 .container 
-    position relative;
     margin 0 auto;
     width 100%;
     max-width 1200px;
-    margin-top 15px;
     display flex;
 
 .welcome__feed 
     flex 1
-
-.welcome__side 
-    width 240px;
-    min-width 240px;
-    margin-left 20px;
-    display flex;
-    justify-content center;
-    align-items center;
-
+    
 .category-nav 
     display flex;
     justify-content space-between;

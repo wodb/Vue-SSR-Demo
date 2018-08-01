@@ -1,4 +1,4 @@
-import List from './list.vue'
+import Top from './top.vue'
 import Special_column from "./special_column.vue";
 
 export default (type) => {
@@ -8,7 +8,7 @@ export default (type) => {
         },
         render(h) {
             if (type == 'top') {
-                return h(List, { props: { type } })
+                return h(Top, { props: { type } })
             }
             return h(Special_column, { props: { type } })
         }

@@ -4,7 +4,7 @@
             <div class="content-box">
                 <div class="info-box">
                     <div class="info-row title-row">
-                        <a href="javascript:void(0)" target="_blank" class="title">{{recommend.title}}</a>
+                        <a :href="recommend.originalUrl" target="_blank" class="title">{{recommend.title}}</a>
                     </div>
                     <div class="info-row meta-row">
                         <ul class="meta-list">
