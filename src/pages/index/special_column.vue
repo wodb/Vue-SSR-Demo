@@ -8,24 +8,24 @@
                     </div>
                     <div class="action-row">
                         <ul class="action-list">
-                            <li class="item like clickable" @click="handleLike">
+                            <li class="item like clickable" @click="handleClick">
                                 <p class="title-box">
                                 <img src="/public/like.svg">
                                 <span class="count">{{ recommend.collectionCount }}</span>
                                 </p>
                             </li>
-                            <li class="item comment clickable" @click="handleComment">
+                            <li class="item comment clickable" @click="handleClick">
                                 <p class="title-box">
                                 <img src="/public/comment.svg">
                                 <span class="count">{{ recommend.commentsCount }}</span>
                                 </p>
                             </li>
-                            <li class="item share clickable hover" title="分享" @click="handleShare">
+                            <li class="item share clickable hover" title="分享" @click="handleClick">
                                 <p class="title-box">
                                 <img src="/public/share.svg">
                                 </p>
                             </li>
-                            <li class="item collect clickable hover" title="收藏" @click="handleCollect">
+                            <li class="item collect clickable hover" title="收藏" @click="handleClick">
                                 <p class="title-box">
                                 <img src="/public/collect.svg">
                                 </p>
@@ -41,38 +41,49 @@
     </ul>
 </template>
 <script>
+import { debounce } from '@/util/util'
+import { mapActions } from 'vuex'
 export default {
-  props: {
-    type: String
-  },
-  computed: {
-    recommends() {
-      return this.$store.state.app.indexList[this.type];
+    props: {
+        type: String
+    },
+    computed: {
+        recommends() {
+        return this.$store.state.app.indexList[this.type];
+        }
+    },
+    mounted() {
+        window.addEventListener('scroll',debounce(this.onscroll,500))
+    },
+    beforeDestroy() {
+        window.addEventListener('scroll',debounce(this.onscroll,500))
+    },
+    methods: {
+        ...mapActions({
+            fetchList:'FETCH_INDEX_LIST_BY_TYPE'
+        }),
+        handleClick(e) {
+        this.$message({
+            message: '暂未实现此功能',
+            type: 'warning'
+        })
+        },
+        onscroll() {
+            const doc = document.documentElement
+            // 预加载
+            if (doc.clientHeight + 300 <= doc.offsetHeight - doc.scrollTop ) {
+                return false
+            }
+            this.fetchList({type:this.type})
+                .then(res => {
+                    this.$message({
+                        message:'加载完成',
+                        type:'success'
+                    })
+                })
+        }
     }
-  },
-  methods: {
-    handleLike(e) {
-      this.sorry(e)
-    },
-    handleComment(e) {
-      this.sorry(e)
-    },
-    handleShare(e) {
-      this.sorry(e)
-    },
-    handleCollect(e) {
-      this.sorry(e)
-    },
-    sorry(e) {
-      e.stopPropagation()
-      e.preventDefault()
-      this.$message({
-        message: '暂未实现此功能',
-        type: 'warning'
-      });
-    }
-  }
-};
+}
 </script>
 <style lang="stylus" scoped>
 .action-row {

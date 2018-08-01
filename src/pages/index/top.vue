@@ -35,47 +35,92 @@
     </ul>
 </template>
 <script>
-    export default {
-        props:{
-            type:String
-        },
-        computed:{
-            recommends() {
-                return this.$store.state.app.indexList[this.type]
+import { debounce } from '@/util/util'
+import { mapActions } from 'vuex'
+
+export default {
+    props: {
+        type: String
+    },
+    computed: {
+        recommends() {
+        return this.$store.state.app.indexList[this.type];
+        }
+    },
+    mounted() {
+        window.addEventListener('scroll',debounce(this.onscroll,500))
+    },
+    beforeDestroy() {
+        window.addEventListener('scroll',debounce(this.onscroll,500))
+    },
+    methods: {
+        ...mapActions({
+            fetchList:'FETCH_INDEX_LIST_BY_TYPE'
+        }),
+        onscroll() {
+            const doc = document.documentElement
+            // 预加载
+            if (doc.clientHeight + 300 <= doc.offsetHeight - doc.scrollTop ) {
+                return false
             }
+            this.fetchList({type:this.type})
+                .then(res => {
+                    this.$message({
+                        message:'加载完成',
+                        type:'success'
+                    })
+                })
         }
     }
+};
 </script>
 <style lang="stylus" scoped>
-.meta-list
-    display flex;
-    align-items baseline;
-    white-space nowrap;
-    .item:not(:last-child):not(.category)::after
-        content "·";
-        margin 4.8px;
-        color #8f969c;
-    .user-popover-box
-        display inline;
-.category-title
-    display inline-block;
-    margin-right 14px;
-    padding 4.5px 0;
-    min-width 60px;
-    text-align center;
-    line-height 1;
-    color #fff;
-    background-color #c69f42;
-    border-radius 2px;
-    font-size 12px
-    &.frontend
-        background-color #56c4e1;
-    &.android
-        background-color #42c67d;
-    &.ai
-        background-color #e8596b;
-    &.backend
-        background-color #857dea;
-    &.ios
-        background-color #ff955b;
+.meta-list {
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
+
+    .item:not(:last-child):not(.category)::after {
+        content: '·';
+        margin: 4.8px;
+        color: #8f969c;
+    }
+
+    .user-popover-box {
+        display: inline;
+    }
+}
+
+.category-title {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 4.5px 0;
+    min-width: 60px;
+    text-align: center;
+    line-height: 1;
+    color: #fff;
+    background-color: #c69f42;
+    border-radius: 2px;
+    font-size: 12px;
+
+    &.frontend {
+        background-color: #56c4e1;
+    }
+
+    &.android {
+        background-color: #42c67d;
+    }
+
+    &.ai {
+        background-color: #e8596b;
+    }
+
+    &.backend {
+        background-color: #857dea;
+    }
+
+    &.ios {
+        background-color: #ff955b;
+    }
+}
 </style>

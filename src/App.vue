@@ -108,7 +108,5 @@
         right 30px;
         bottom 30px;
     .main-container
-        position relative;
-        top 75px;
-        left 0
+        margin-top 75px!important
 </style>
