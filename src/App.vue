@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="24" class="bg-white">
                 <div class="head-content">
-                    <img src="/public/logo-48.png" alt="logo" class="head-log">
+                    <img src="/public/logo-98.png" alt="logo" class="head-log">
                     <nav class="main-nav">
                         <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
                             <el-menu-item index="/index">首页</el-menu-item>
@@ -51,9 +51,9 @@
         background-color #fff;
         display flex;
         .head-log
-            margin-right 30px;
-            width 48px;
-            height 48px;
-            margin-top 6px;
+            width 98px;
+            height 38px;
+            margin-top 12px;
+            margin-right 12px;
 
 </style>

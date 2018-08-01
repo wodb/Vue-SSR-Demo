@@ -1,6 +1,6 @@
 <template>
     <ul class="entry-list">
-        <li class="item" v-for="(recommend, index) in recommends" :key="index">
+        <li class="list-item" v-for="(recommend, index) in recommends" :key="index">
             <div class="content-box">
                 <div class="info-box">
                     <div class="info-row title-row">

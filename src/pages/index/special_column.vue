@@ -1,6 +1,6 @@
 <template>
     <ul class="entry-list">
-        <li class="item" v-for="(recommend, index) in recommends" :key="index">
+        <li class="list-item" v-for="(recommend, index) in recommends" :key="index">
             <div class="content-box">
                 <div class="info-box">
                     <div class="info-row title-row">
@@ -41,90 +41,105 @@
     </ul>
 </template>
 <script>
-    export default {
-        props:{
-            type:String
-        },
-        computed:{
-            recommends() {
-                return this.$store.state.app.indexList[this.type]
-            }
-        },
-        methods:{
-            handleLike (e) {
-                this.sorry(e)
-            },
-            handleComment (e) {
-                this.sorry(e)
-            },
-            handleShare (e) {
-                this.sorry(e)
-            },
-            handleCollect (e) {
-                this.sorry(e)
-            },
-            sorry (e) {
-                e.stopPropagation()
-                e.preventDefault()
-                this.$message({
-                    message: '暂未完成此功能',
-                    type: 'warning'
-                })
-            }
-        }
+export default {
+  props: {
+    type: String
+  },
+  computed: {
+    recommends() {
+      return this.$store.state.app.indexList[this.type];
     }
+  },
+  methods: {
+    handleLike(e) {
+      this.sorry(e)
+    },
+    handleComment(e) {
+      this.sorry(e)
+    },
+    handleShare(e) {
+      this.sorry(e)
+    },
+    handleCollect(e) {
+      this.sorry(e)
+    },
+    sorry(e) {
+      e.stopPropagation()
+      e.preventDefault()
+      this.$message({
+        message: '暂未实现此功能',
+        type: 'warning'
+      });
+    }
+  }
+};
 </script>
 <style lang="stylus" scoped>
-.action-row 
-    display inline-flex
-    white-space nowrap
+.action-row {
+    display: inline-flex;
+    white-space: nowrap;
+}
+
+.list-item:hover {
+    .action-list .item.share, .action-list .item.collect {
+        visibility: visible;
+    }
+}
 
 .action-list {
-  display inline-flex
-  white-space nowrap
-  > .item {
-    display flex
-    align-items center
-    justify-content center
-    position relative
-    padding 0 10px
-    height 22px
-    font-size 12px
-    line-height 1
-    white-space nowrap
-    color #b2bac2
-    border-radius 1px
-    border 1px solid #edeeef
-    .title-box {
-      display flex
-      align-items center
-      padding 0 1px
-      height 100%
+    display: inline-flex;
+    white-space: nowrap;
+
+    > .item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 0 10px;
+        height: 22px;
+        font-size: 12px;
+        line-height: 1;
+        white-space: nowrap;
+        border-radius: 1px;
+        border: 1px solid #edeeef;
+
+        .title-box {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            height: 100%;
+        }
+
+        .count {
+            margin-left: 5px;
+            font-weight: 700;
+            color: #b2bac2;
+        }
     }
-    .count {
-      margin-left 5px
-      font-weight 700
+
+    > .item.clickable:hover {
+        background: #f7f8fa;
     }
-  }
-  > .item.clickable:hover {
-    background #f7f8fa
-  }
-  > .item.like {
-    padding 0
-  }
-  > .item.comment {
-    margin-left -1px
-    padding 0
-  }
-  > .item.share {
-    margin-left 8px
-    padding 0
-    visibility hidden
-  }
-  > .item.collect {
-    margin-left -1px
-    padding 0
-    visibility hidden
-  }
+
+    > .item.like {
+        padding: 0;
+    }
+
+    > .item.comment {
+        margin-left: -1px;
+        padding: 0;
+    }
+
+    > .item.share {
+        margin-left: 8px;
+        padding: 0;
+        visibility: hidden;
+    }
+
+    > .item.collect {
+        margin-left: -1px;
+        padding: 0;
+        visibility: hidden;
+    }
 }
 </style>

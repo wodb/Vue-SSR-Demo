@@ -79,9 +79,12 @@
 		color #007fff;
 
 .entry-list
-    .item 
+    .list-item 
         border-bottom 1px solid rgba(178,186,194,.15);
         color #90979c;
+        cursor pointer
+        &:hover
+            background-color rgba(0,0,0,.01)
     .content-box
         padding 18px 24px;
         display flex

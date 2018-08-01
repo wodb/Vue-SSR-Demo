@@ -1,10 +1,10 @@
-import 'element-ui/lib/theme-chalk/index.css'
-import './styles/style.stylus'
-
 import {createApp} from './app'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css' // progress bar style
 
 const {app, router, store} = createApp()
 
+NProgress.configure({ easing: 'ease', speed: 500 })
 
 if (window.__INITIAL_STATE__) {
     store.replaceState(window.__INITIAL_STATE__)
@@ -12,6 +12,8 @@ if (window.__INITIAL_STATE__) {
 
 router.onReady(() => {
     router.beforeResolve((to, from, next) => {
+        // start progress
+        NProgress.inc()
 
         const matched = router.getMatchedComponents(to)
         const prevMatched = router.getMatchedComponents(from)
@@ -34,9 +36,8 @@ router.onReady(() => {
                 return c.asyncData({store, route: to})
             }
         })).then(() => {
-
             // 停止加载指示器(loading indicator)
-
+            NProgress.done()
             next()
         }).catch(next)
     })

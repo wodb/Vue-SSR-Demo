@@ -99,7 +99,7 @@ function render (req, res) {
   }
 
   const context = {
-    title: 'Vue HN 2.0', // default title
+    title: '掘金 - juejin.im - 一个帮助开发者成长的社区', // default title
     url: req.url
   }
   renderer.renderToString(context, (err, html) => {

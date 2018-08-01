@@ -5,8 +5,9 @@ import createRouter from './router/index'
 import App from './App.vue'
 import createStore from './store/index'
 import { sync } from 'vuex-router-sync'
-import * as filters from "@/util/filters";
-
+import * as filters from '@/util/filters'
+import 'element-ui/lib/theme-chalk/index.css'
+import './styles/style.stylus'
 
 export function createApp() {
 
