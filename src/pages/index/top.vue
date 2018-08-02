@@ -44,7 +44,7 @@ export default {
     },
     computed: {
         recommends() {
-        return this.$store.state.app.indexList[this.type];
+            return this.$store.state.app.indexList[this.type];
         }
     },
     mounted() {

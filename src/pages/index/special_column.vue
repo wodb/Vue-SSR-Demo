@@ -49,7 +49,7 @@ export default {
     },
     computed: {
         recommends() {
-        return this.$store.state.app.indexList[this.type];
+            return this.$store.state.app.indexList[this.type];
         }
     },
     mounted() {
@@ -63,10 +63,10 @@ export default {
             fetchList:'FETCH_INDEX_LIST_BY_TYPE'
         }),
         handleClick(e) {
-        this.$message({
-            message: '暂未实现此功能',
-            type: 'warning'
-        })
+            this.$message({
+                message: '暂未实现此功能',
+                type: 'warning'
+            })
         },
         onscroll() {
             const doc = document.documentElement

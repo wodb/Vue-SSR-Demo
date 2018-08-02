@@ -46,13 +46,9 @@ const app = {
                     return res
                 })
         },
-        FETCH_INDEX_LIST_BY_TYPE({ commit }, { type }) {
-            let p = null
-            if (type == 'top') {
-                p = fetchRecommendByType(type)
-            } else {
-                p = fetchEntriesByType(type)
-            }
+        FETCH_INDEX_LIST_BY_TYPE({ commit }, { type, token }) {
+            let p = type == 'top' ? fetchRecommendByType(type) : fetchEntriesByType(type)
+            
             return p
                 .then(res => {
                     commit('SET_INDEX_LIST', { type, data: res })

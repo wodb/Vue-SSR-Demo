@@ -50,14 +50,21 @@
             }
         },
         mounted() {
-            window.addEventListener('scroll',handleScroll.bind(this))
+            window.addEventListener('scroll',debounce(this.handleScroll,500))
         },
         destroyed() {
-            window.removeEventListener('scroll',handleScroll.bind(this))
+            window.removeEventListener('scroll',debounce(this.handleScroll,500))
         },
         methods: {
             handleSelect(key, keyPath) {
                 console.log(key, keyPath)
+            },
+            handleScroll(){
+                if (document.documentElement.scrollTop >= 200) {
+                    this.top = true
+                }else {
+                    this.top = false
+                }
             },
             goTop() {
                 let timer = null
