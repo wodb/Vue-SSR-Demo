@@ -10,13 +10,18 @@
                             <el-menu-item index="/books">小册</el-menu-item>
                         </el-menu>
                     </nav>
+                    <div class="main-right">
+                        <span class="login" @click.stop.prevent="handleLogin">登录</span>
+                        <span>·</span>
+                        <span class="register">注册</span>
+                    </div>
                 </div>
             </el-col>
         </el-row>
-        <login />
+        <login v-if="possibleLogin" :handleLogin="handleLogin"/>
         <router-view class="main-container"></router-view>
         <transition name="el-fade-in">
-            <el-button icon="el-icon-d-caret" class="top" v-show="top" @click="goTop" />
+            <el-button icon="el-icon-d-caret" class="top" v-show="top" @click="handleGoTop" />
         </transition>
     </div>
 </template>
@@ -26,7 +31,8 @@
     export default {
         data() {
             return {
-                top:false
+                top: false,
+                possibleLogin: false
             }
         },
         components:{
@@ -50,7 +56,7 @@
                     this.top = false
                 }
             },
-            goTop() {
+            handleGoTop() {
                 let timer = null
                 const doc = document.documentElement
                 const scrollTo = 0
@@ -71,6 +77,9 @@
                         clearInterval(timer)
                     }
                 },15)
+            },
+            handleLogin() {
+                this.possibleLogin = !this.possibleLogin
             }
         }
     }
@@ -87,8 +96,10 @@
         width 1200px;
         margin 0 auto;
         height 60px;
+        line-height 60px
         background-color #fff;
         display flex;
+        position relative
         .head-log
             width 98px;
             height 38px;
@@ -100,4 +111,16 @@
         bottom 30px;
     .main-container
         margin-top 75px!important
+    .main-right
+        position absolute
+        right 10px
+        top 0
+        width 85px
+        display flex
+        justify-content space-between
+        .login,.register
+            cursor pointer
+            color #007fff
+            font-size 16px
+            font-weight 700
 </style>
