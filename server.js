@@ -100,7 +100,8 @@ function render (req, res) {
 
   const context = {
     title: '掘金 - juejin.im - 一个帮助开发者成长的社区', // default title
-    url: req.url
+    url: req.url,
+    cookie:'server cookie'
   }
   renderer.renderToString(context, (err, html) => {
     if (err) {

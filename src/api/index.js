@@ -1,4 +1,5 @@
 import request from '@/util/request'
+
 const data = [
     { id: 0, text: '推荐', attr: '' },
     { id: 1, text: '前端', attr: '/frontend' },
@@ -49,7 +50,8 @@ export const fetchEntriesByType = (type) => {
         before: Math.random(),
         src: 'web'
     }
-    return request.get('/timeline/get_entry_by_rank', {
+    
+    return request.api.get('/timeline/get_entry_by_rank', {
         params
     }).then(res => res.d.entrylist)
 }
@@ -60,7 +62,7 @@ export const fetchRecommendByType = (type) => {
         ab: 'welcome_3',
         src: 'web'
     }
-    return request.get('/recommender/get_recommended_entry', {
+    return request.api.get('/recommender/get_recommended_entry', {
         params
     }).then(res => res.d)
 }

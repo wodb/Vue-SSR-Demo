@@ -1,21 +1,35 @@
 import axios from 'axios'
 
-const service = axios.create({
-    baseURL:'http://test.mac.com',
-    timeout: 10000
-})
+export default {
+	api:null, // 当做API方法
+	config:{
+		cookie:null
+	}, // 这里存放cookie和一些配置
+	setCookie(cookie) {
+		this.config.cookie = cookie
+	},
+	createApi(config) {
+		this.config = config
 
-service.interceptors.request.use(config => {
-    return config
-}, error => {
-    console.log(`for debug request`,error)
-    return Promise.reject(error)
-})
+		const service = axios.create({
+			baseURL:'http://test.mac.com',
+			timeout:10000
+		})
 
-service.interceptors.response.use(response => {
-    return response.data
-}, error => {
-    return Promise.reject(error)
-})
+		service.interceptors.request.use(config => {
+			console.log(`request.js config`,this.config)
+		    return config
+		}, error => {
+		    console.log(`for debug request`,error)
+		    return Promise.reject(error)
+		})
 
-export default service
+		service.interceptors.response.use(response => {
+		    return response.data
+		}, error => {
+		    return Promise.reject(error)
+		})
+		
+		this.api = service
+	}
+}

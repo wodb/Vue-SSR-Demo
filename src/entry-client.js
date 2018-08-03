@@ -1,5 +1,7 @@
 import {createApp} from './app'
 import NProgress from 'nprogress'
+import requrest from '@/util/request'
+
 import 'nprogress/nprogress.css' // progress bar style
 
 const {app, router, store} = createApp()
@@ -9,6 +11,10 @@ NProgress.configure({ easing: 'ease', speed: 500 })
 if (window.__INITIAL_STATE__) {
     store.replaceState(window.__INITIAL_STATE__)
 }
+
+// set cookie
+requrest.createApi({cookie:'client cookie'})
+
 
 router.onReady(() => {
     router.beforeResolve((to, from, next) => {

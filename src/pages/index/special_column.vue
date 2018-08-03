@@ -41,7 +41,7 @@
     </ul>
 </template>
 <script>
-import { debounce } from '@/util/util'
+import { throttle } from '@/util/util'
 import { mapActions } from 'vuex'
 export default {
     props: {
@@ -53,10 +53,10 @@ export default {
         }
     },
     mounted() {
-        window.addEventListener('scroll',debounce(this.onscroll,500))
+        window.addEventListener('scroll',throttle(this.onscroll,500))
     },
     beforeDestroy() {
-        window.addEventListener('scroll',debounce(this.onscroll,500))
+        window.addEventListener('scroll',throttle(this.onscroll,500))
     },
     methods: {
         ...mapActions({

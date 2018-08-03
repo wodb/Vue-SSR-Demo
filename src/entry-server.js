@@ -1,4 +1,5 @@
 import {createApp} from './app'
+import requrest from '@/util/request'
 
 export default (context) => {
 
@@ -13,6 +14,9 @@ export default (context) => {
             if (!matcheds.length) return reject({code:404})
 
             console.log(`entry-server len`,matcheds.length)
+
+            // set cookie
+            requrest.createApi({cookie:context.cookie})
 
             Promise.all(matcheds.map(Component => {
                 if (Component.asyncData) {
