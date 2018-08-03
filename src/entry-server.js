@@ -11,7 +11,7 @@ export default (context) => {
         router.onReady(() => {
             const matcheds = router.getMatchedComponents()
 
-            if (!matcheds.length) return reject({code:404})
+            if (!matcheds.length) return reject({s:404})
 
             console.log(`entry-server len`,matcheds.length)
 
@@ -35,6 +35,9 @@ export default (context) => {
                     context.state = store.state
 
                     resolve(app)
+                })
+                .catch(err => {
+                    return reject({s:500,m:err.message})
                 })
         },reject)
     })

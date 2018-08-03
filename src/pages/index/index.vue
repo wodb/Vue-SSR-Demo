@@ -20,25 +20,57 @@
     </div>
 </template>
 <script>
-    export default {
-        asyncData({store,router}) {
-            return store.dispatch('FETCH_INDEX_TAGS')
+import { throttle } from '@/util/util'
+import { mapActions } from 'vuex'
+export default {
+    data() {
+        return {}
+    },
+    asyncData({store,router}) {
+        return store.dispatch('FETCH_INDEX_TAGS')
+	},
+	computed: {
+        tags() {
+            return this.$store.state.app.indexTags
 		},
-		computed: {
-            tags() {
-                return this.$store.state.app.indexTags
-			},
-			currentTag() {
-                return this.$store.state.app.activeType
-			}
-		},
-        data() {
-            return {
+		currentTag() {
+            return this.$store.state.app.activeType
+		}
+	},
+    mounted() {
+        this.throttleLoad = throttle(this.onscroll,500)
+
+        window.addEventListener('scroll',this.throttleLoad)
+    },
+    beforeDestroy() {
+        window.removeEventListener('scroll',this.throttleLoad)
+    },
+    methods:{
+        ...mapActions({
+            fetchList:'FETCH_INDEX_LIST_BY_TYPE'
+        }),
+        onscroll() {
+            const doc = document.documentElement
+            // 预加载
+            if (doc.clientHeight + 300 <= doc.offsetHeight - doc.scrollTop ) {
+                return false
             }
-        },
-        mounted() {
+            this.fetchList({type:this.type})
+                .then(res => {
+                    this.$message({
+                        message:'加载完成',
+                        type:'success'
+                    })
+                })
+                .catch(err => {
+                    this.$message({
+                        message:err,
+                        type:'error'
+                    })
+                })
         }
     }
+}
 </script>
 <style lang="stylus">
 

@@ -8,24 +8,12 @@
                         <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
                             <el-menu-item index="/index">首页</el-menu-item>
                             <el-menu-item index="/books">小册</el-menu-item>
-                            <el-submenu index="2">
-                                <template slot="title">我的工作台</template>
-                                <el-menu-item index="2-1">选项1</el-menu-item>
-                                <el-menu-item index="2-2">选项2</el-menu-item>
-                                <el-menu-item index="2-3">选项3</el-menu-item>
-                                <el-submenu index="2-4">
-                                    <template slot="title">选项4</template>
-                                    <el-menu-item index="2-4-1">选项1</el-menu-item>
-                                    <el-menu-item index="2-4-2">选项2</el-menu-item>
-                                    <el-menu-item index="2-4-3">选项3</el-menu-item>
-                                </el-submenu>
-                            </el-submenu>
-                            <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
                         </el-menu>
                     </nav>
                 </div>
             </el-col>
         </el-row>
+        <login />
         <router-view class="main-container"></router-view>
         <transition name="el-fade-in">
             <el-button icon="el-icon-d-caret" class="top" v-show="top" @click="goTop" />
@@ -33,27 +21,23 @@
     </div>
 </template>
 <script>
-    import { debounce } from '@/util/util'
-
-    const handleScroll = debounce(function (e) {
-        if (document.documentElement.scrollTop >= 200) {
-            this.top = true
-        }else {
-            this.top = false
-        }
-    },500)
-
+    import { throttle } from '@/util/util'
+    import login from '@/pages/login/index.vue'
     export default {
         data() {
             return {
                 top:false
             }
         },
+        components:{
+            login
+        },
         mounted() {
-            window.addEventListener('scroll',debounce(this.handleScroll,500))
+            this.scrollTop = throttle(this.handleScroll,500)
+            window.addEventListener('scroll',this.scrollTop)
         },
         destroyed() {
-            window.removeEventListener('scroll',debounce(this.handleScroll,500))
+            window.removeEventListener('scroll',this.scrollTop)
         },
         methods: {
             handleSelect(key, keyPath) {

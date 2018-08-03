@@ -25,6 +25,9 @@ export default {
 		})
 
 		service.interceptors.response.use(response => {
+			if (response.data.s != 1) {
+				return Promise.reject(response.data.m)
+			}
 		    return response.data
 		}, error => {
 		    return Promise.reject(error)

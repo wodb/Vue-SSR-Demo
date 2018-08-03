@@ -41,8 +41,6 @@
     </ul>
 </template>
 <script>
-import { throttle } from '@/util/util'
-import { mapActions } from 'vuex'
 export default {
     props: {
         type: String
@@ -52,35 +50,12 @@ export default {
             return this.$store.state.app.indexList[this.type];
         }
     },
-    mounted() {
-        window.addEventListener('scroll',throttle(this.onscroll,500))
-    },
-    beforeDestroy() {
-        window.addEventListener('scroll',throttle(this.onscroll,500))
-    },
     methods: {
-        ...mapActions({
-            fetchList:'FETCH_INDEX_LIST_BY_TYPE'
-        }),
         handleClick(e) {
             this.$message({
                 message: '暂未实现此功能',
                 type: 'warning'
             })
-        },
-        onscroll() {
-            const doc = document.documentElement
-            // 预加载
-            if (doc.clientHeight + 300 <= doc.offsetHeight - doc.scrollTop ) {
-                return false
-            }
-            this.fetchList({type:this.type})
-                .then(res => {
-                    this.$message({
-                        message:'加载完成',
-                        type:'success'
-                    })
-                })
         }
     }
 }
