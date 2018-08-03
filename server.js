@@ -78,11 +78,24 @@ app.use('/service-worker.js', serve('./dist/service-worker.js'))
 // https://www.nginx.com/blog/benefits-of-microcaching-nginx/
 app.use(microcache.cacheSeconds(1, req => useMicroCache && req.originalUrl))
 
+function getCookie(headers) {
+  if (!headers || !headers.cookie) return ''
+
+  let cookies = headers.cookie.split(';')
+
+  for (let i = cookies.length - 1; i >= 0; i--) {
+    let itemCookie = cookies[i].split('=')
+
+    if (itemCookie[0].trim() == 'token') return itemCookie[1]
+  }
+  return ''
+}
+
 function render (req, res) {
   const s = Date.now()
-    console.log(req.url);
+  console.log(req.url)
 
-    res.setHeader("Content-Type", "text/html")
+  res.setHeader("Content-Type", "text/html")
   res.setHeader("Server", serverInfo)
 
   const handleError = err => {
@@ -97,11 +110,11 @@ function render (req, res) {
       console.error(err.stack)
     }
   }
-
+  
   const context = {
     title: '掘金 - juejin.im - 一个帮助开发者成长的社区', // default title
     url: req.url,
-    cookie:'server cookie'
+    cookie: getCookie(req.headers)
   }
   renderer.renderToString(context, (err, html) => {
     if (err) {

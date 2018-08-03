@@ -1,6 +1,7 @@
 import {createApp} from './app'
 import NProgress from 'nprogress'
 import requrest from '@/util/request'
+import { getCookie } from '@/util/util'
 
 import 'nprogress/nprogress.css' // progress bar style
 
@@ -13,7 +14,7 @@ if (window.__INITIAL_STATE__) {
 }
 
 // set cookie
-requrest.createApi({cookie:'client cookie'})
+requrest.createApi({cookie: getCookie('token')})
 
 
 router.onReady(() => {

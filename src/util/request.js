@@ -13,10 +13,14 @@ export default {
 
 		const service = axios.create({
 			baseURL:'http://test.mac.com',
-			timeout:10000
+			timeout:10000,
+			headers:{
+				token:this.config.cookie
+			}
 		})
 
 		service.interceptors.request.use(config => {
+
 			console.log(`request.js config`,this.config)
 		    return config
 		}, error => {

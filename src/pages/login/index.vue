@@ -23,6 +23,7 @@
 	</div>
 </template>
 <script>
+	import { setCookie } from '@/util/util'
 	export default {
 		props:{
 			handleLogin:{
@@ -64,6 +65,9 @@
 		          	if (valid) {
 		            	this.$message.success('登陆成功')
 		            	this.handleLogin()
+		            	setCookie('token',this.ruleForm2.username)
+		            	// 刷新
+		            	location.reload()
 		          	} else {
 		            	console.log('error submit!!')
 		            	return false
