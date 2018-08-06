@@ -3,7 +3,7 @@ import axios from 'axios'
 export default {
 	api:null, // 当做API方法
 	config:{
-		cookie:null
+		cookie:''
 	}, // 这里存放cookie和一些配置
 	setCookie(cookie) {
 		this.config.cookie = cookie
@@ -15,7 +15,7 @@ export default {
 			baseURL:'http://test.mac.com',
 			timeout:10000,
 			headers:{
-				token:this.config.cookie
+				// token:this.config.cookie
 			}
 		})
 

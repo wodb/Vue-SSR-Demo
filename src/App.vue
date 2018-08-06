@@ -109,6 +109,7 @@
         position fixed;
         right 30px;
         bottom 30px;
+        width 50px;
     .main-container
         margin-top 75px!important
     .main-right
