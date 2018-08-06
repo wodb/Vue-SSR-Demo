@@ -18,27 +18,40 @@ export function debounce(fn, delay) {
 }
 /**
  * 节流阀
- * @param  {[type]} func  [description]
- * @param  {[type]} delay [description]
- * @return {[type]}       [description]
+ * @param  {[type]} func    [description]
+ * @param  {[type]} wait    [description]
+ * @param  {[type]} options [description]
+ * @return {[type]}         [description]
  */
-export function throttle(func, delay) {
-    let timer = null
-    let startTime = Date.parse(new Date())
-
+export function throttle(func, wait, options) {
+    let context, args, result
+    let timeout = null
+    let previous = 0
+    if (!options) options = {}
+    let later = function() {
+        previous = options.leading === false ? 0 : new Date().getTime()
+        timeout = null
+        result = func.apply(context, args)
+        if (!timeout) context = args = null
+    }
     return function() {
-        let curTime = Date.parse(new Date())
-        let remaining = delay - (curTime - startTime)
-        let context = this
-        let args = arguments
-
-        clearTimeout(timer)
-        if (remaining <= 0) {
-            func.apply(context, args)
-            startTime = Date.parse(new Date())
-        } else {
-            timer = setTimeout(func, remaining)
+        let now = new Date().getTime()
+        if (!previous && options.leading === false) previous = now
+        let remaining = wait - (now - previous)
+        context = this
+        args = arguments
+        if (remaining <= 0 || remaining > wait) {
+            if (timeout) {
+                clearTimeout(timeout)
+                timeout = null
+            }
+            previous = now
+            result = func.apply(context, args)
+            if (!timeout) context = args = null
+        } else if (!timeout && options.trailing !== false) {
+            timeout = setTimeout(later, remaining)
         }
+        return result
     }
 }
 

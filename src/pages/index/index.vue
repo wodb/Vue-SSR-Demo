@@ -38,8 +38,9 @@ export default {
 		}
 	},
     mounted() {
-        this.throttleLoad = throttle(this.onscroll,500)
-
+        this.throttleLoad = throttle(this.onscroll,1500,{
+            leading:false
+        })
         window.addEventListener('scroll',this.throttleLoad)
     },
     beforeDestroy() {
@@ -50,24 +51,25 @@ export default {
             fetchList:'FETCH_INDEX_LIST_BY_TYPE'
         }),
         onscroll() {
+            
             const doc = document.documentElement
-            // 预加载
-            if (doc.clientHeight + 300 <= doc.offsetHeight - doc.scrollTop ) {
-                return false
+
+            if (doc.offsetHeight <= (doc.scrollTop + doc.clientHeight + 200)) {
+
+                this.fetchList({type:this.type})
+                    .then(res => {
+                        this.$message({
+                            message:'加载完成',
+                            type:'success'
+                        })
+                    })
+                    .catch(err => {
+                        this.$message({
+                            message:err,
+                            type:'error'
+                        })
+                    })
             }
-            this.fetchList({type:this.type})
-                .then(res => {
-                    this.$message({
-                        message:'加载完成',
-                        type:'success'
-                    })
-                })
-                .catch(err => {
-                    this.$message({
-                        message:err,
-                        type:'error'
-                    })
-                })
         }
     }
 }

@@ -26,7 +26,7 @@
     </div>
 </template>
 <script>
-    import { throttle } from '@/util/util'
+    import { debounce } from '@/util/util'
     import login from '@/pages/login/index.vue'
     export default {
         data() {
@@ -39,7 +39,7 @@
             login
         },
         mounted() {
-            this.scrollTop = throttle(this.handleScroll,500)
+            this.scrollTop = debounce(this.handleScroll,500)
             window.addEventListener('scroll',this.scrollTop)
         },
         destroyed() {
