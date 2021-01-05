@@ -15,7 +15,7 @@
     "npm": ">=4.0"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "compression": "^1.7.1",
     "cross-env": "^5.1.1",
     "element-ui": "^2.4.5",
